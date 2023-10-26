@@ -7,7 +7,7 @@
 
     
 <script id="shader-gouraud-phong-vs" type="x-shader/x-vertex">#version 300 es
-
+// #version 300 es
 in vec3 aVertexNormal;
 in vec3 aVertexPosition;
    
@@ -63,7 +63,7 @@ void main(void) {
 </script>
   
 <script id="shader-gouraud-phong-fs" type="x-shader/x-fragment">#version 300 es
-
+// #version 300 es
 precision mediump float;
 in vec4 vColor;
 out vec4 myOutputColor;
@@ -75,10 +75,23 @@ void main(void) {
 
     
 <script id="shader-phong-phong-vs" type="x-shader/x-vertex">
-
 #version 300 es
 
+in vec3 aVertexNormal; 
+in vec3 aVertexPosition; 
 
+uniform mat4 uMVMatrix;
+uniform mat4 uPMatrix;
+
+out vec3 vVertexNormal;
+out vec4 vVertexPosition;
+
+void main(void){
+  vVertexPosition = uMVMatrix*vec4(aVertexPosition, 1.0);
+  vVertexNormal = aVertexNormal;
+
+  gl_Position = uPMatrix*uMVMatrix*vec4(aVertexPosition,1.0);
+}
    
 </script>
     
